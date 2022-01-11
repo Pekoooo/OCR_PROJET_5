@@ -19,7 +19,6 @@ public class TaskRepository {
         AppDatabase db = AppDatabase.getDatabase(application);
         taskDao = db.taskDao();
         allTasks = taskDao.getAllTasks();
-        //tasksCount = taskDao.getCount();
     }
 
     public LiveData<List<Task>> getAllTasks() {
@@ -38,7 +37,4 @@ public class TaskRepository {
         });
     }
 
-   // public int getCount(){
-   //     return tasksCount;
-   // }
 }

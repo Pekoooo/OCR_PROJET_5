@@ -25,10 +25,9 @@ import java.util.concurrent.Executors;
 
 public abstract class AppDatabase extends RoomDatabase {
 
-
+    public static final String APP_NAME = "app_database";
     public abstract TaskDao taskDao();
     public abstract ProjectDao projectDao();
-    public static final String APP_NAME = "app_database";
     private static volatile AppDatabase INSTANCE;
     private static final int NUMBER_OF_THREADS = 4;
     static final ExecutorService databaseWriteExecutor =
@@ -45,11 +44,10 @@ public abstract class AppDatabase extends RoomDatabase {
                 }
             }
         }
-
         return INSTANCE;
     }
 
-    private static RoomDatabase.Callback prepopulateDatabase = new RoomDatabase.Callback(){
+    private static final RoomDatabase.Callback prepopulateDatabase = new RoomDatabase.Callback(){
         @Override
         public void onCreate(@NonNull SupportSQLiteDatabase db) {
             super.onCreate(db);
