@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
      * The adapter which handles the list of tasks
      */
 
-    private final TasksAdapter adapter = new TasksAdapter(tasks, this);
+    private final TasksAdapter adapter = new TasksAdapter(new TasksAdapter.WordDiff(),  this);
 
     /**
      * The sort method to be used to display tasks
@@ -85,7 +85,6 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
      * The RecyclerView which displays the list of tasks
      */
     // Suppress warning is safe because variable is initialized in onCreate
-    @SuppressWarnings("NullableProblems")
     @NonNull
     private RecyclerView listTasks;
 
@@ -93,7 +92,6 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
      * The TextView displaying the empty state
      */
     // Suppress warning is safe because variable is initialized in onCreate
-    @SuppressWarnings("NullableProblems")
     @NonNull
     private TextView lblNoTasks;
 
@@ -111,7 +109,6 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
 
 
         taskViewModel = new ViewModelProvider(this).get(TaskViewModel.class);
-
         taskViewModel.getAllTasks().observe(this, new Observer<List<Task>>() {
             @Override
             public void onChanged(List<Task> tasks) {
@@ -120,6 +117,8 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
 
             }
         });
+
+
 
         findViewById(R.id.fab_add_task).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -149,14 +148,14 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
             sortMethod = SortMethod.RECENT_FIRST;
         }
 
-        updateTasks();
+       updateTasks();
 
         return super.onOptionsItemSelected(item);
     }
 
     @Override
     public void onDeleteTask(Task task) {
-        tasks.remove(task);
+
         taskViewModel.delete(task);
 
     }
@@ -194,7 +193,6 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
                 );
 
                 taskViewModel.insert(task);
-
                 dialogInterface.dismiss();
             }
             // If name has been set, but project has not been set (this should never occur)
@@ -222,6 +220,7 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
         populateDialogSpinner();
     }
 
+
     /**
      * Updates the list of tasks in the UI
      */
@@ -246,9 +245,9 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
                     Collections.sort(tasks, new Task.TaskOldComparator());
                     break;
 
-            }
+              }
 
-            adapter.updateTasks(tasks);
+              adapter.submitList(tasks);
 
         }
     }

@@ -24,12 +24,12 @@ import java.util.List;
  *
  * @author Gaëtan HERFRAY
  */
-public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TaskViewHolder> {
+public class TasksAdapter extends ListAdapter<Task, TasksAdapter.TaskViewHolder> {
     /**
      * The list of tasks the adapter deals with
      */
     @NonNull
-    private List<Task> tasks;
+    private List<Task> tasks = new ArrayList<>();
 
     /**
      * The listener for when a task needs to be deleted
@@ -38,10 +38,25 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TaskViewHold
     private final DeleteTaskListener deleteTaskListener;
 
 
-    TasksAdapter(@NonNull final List<Task> tasks, @NonNull final DeleteTaskListener deleteTaskListener) {
-        this.tasks = tasks;
+    TasksAdapter(@NonNull DiffUtil.ItemCallback<Task> diffCallback, @NonNull final DeleteTaskListener deleteTaskListener) {
+        super(diffCallback);
         this.deleteTaskListener = deleteTaskListener;
     }
+
+    public static class WordDiff extends DiffUtil.ItemCallback<Task> {
+
+        @Override
+        public boolean areItemsTheSame(@NonNull Task oldItem, @NonNull Task newItem) {
+            return oldItem.getId() == newItem.getId();
+        }
+
+        @Override
+        public boolean areContentsTheSame(@NonNull Task oldItem, @NonNull Task newItem) {
+            return oldItem.getName().equals(newItem.getName());
+        }
+    }
+
+
 
 
     @NonNull
@@ -62,10 +77,12 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TaskViewHold
         return tasks.size();
     }
 
+
+
     public void updateTasks(List<Task> tasks){
 
         this.tasks = tasks;
-        notifyDataSetChanged();
+        submitList(tasks);
 
     }
 
