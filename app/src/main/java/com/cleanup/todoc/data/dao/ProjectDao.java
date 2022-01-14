@@ -19,7 +19,5 @@ public interface ProjectDao {
     @Query("DELETE FROM project_table")
     void deleteAll();
 
-    // @Query("SELECT * FROM project_table")
-    // LiveData<List<Project>> getAll();
 
 }

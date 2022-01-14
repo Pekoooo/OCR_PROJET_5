@@ -20,6 +20,7 @@ public class TaskRepository {
         taskDao = db.taskDao();
         allTasks = taskDao.getAllTasks();
         //tasksCount = taskDao.getCount();
+
     }
 
     public LiveData<List<Task>> getAllTasks() {

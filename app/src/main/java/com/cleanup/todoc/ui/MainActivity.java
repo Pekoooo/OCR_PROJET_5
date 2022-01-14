@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
      * The adapter which handles the list of tasks
      */
 
-    private final TasksAdapter adapter = new TasksAdapter(new TasksAdapter.WordDiff(),  this);
+    private TasksAdapter adapter = new TasksAdapter(tasks, this);
 
     /**
      * The sort method to be used to display tasks
@@ -109,14 +109,8 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
 
 
         taskViewModel = new ViewModelProvider(this).get(TaskViewModel.class);
-        taskViewModel.getAllTasks().observe(this, new Observer<List<Task>>() {
-            @Override
-            public void onChanged(List<Task> tasks) {
+        getTasks();
 
-                adapter.updateTasks(tasks);
-
-            }
-        });
 
 
 
@@ -127,6 +121,16 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
             }
         });
     }
+
+    private void getTasks() {
+        taskViewModel.getAllTasks().observe(this, new Observer<List<Task>>() {
+            @Override
+            public void onChanged(List<Task> tasks) {
+                updateTasks(tasks);
+            }
+        });
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -148,10 +152,11 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
             sortMethod = SortMethod.RECENT_FIRST;
         }
 
-       updateTasks();
+       getTasks();
 
         return super.onOptionsItemSelected(item);
     }
+
 
     @Override
     public void onDeleteTask(Task task) {
@@ -224,7 +229,7 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
     /**
      * Updates the list of tasks in the UI
      */
-    private void updateTasks() {
+    private void updateTasks(List<Task> tasks) {
         if (tasks.size() == 0) {
             lblNoTasks.setVisibility(View.VISIBLE);
             listTasks.setVisibility(View.GONE);
@@ -247,7 +252,7 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
 
               }
 
-              adapter.submitList(tasks);
+              adapter.updateTasks(tasks);
 
         }
     }
