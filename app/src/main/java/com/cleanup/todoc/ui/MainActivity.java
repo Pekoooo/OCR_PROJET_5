@@ -98,7 +98,6 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_main);
 
         listTasks = findViewById(R.id.list_tasks);
@@ -107,12 +106,8 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
         listTasks.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         listTasks.setAdapter(adapter);
 
-
         taskViewModel = new ViewModelProvider(this).get(TaskViewModel.class);
         getTasks();
-
-
-
 
         findViewById(R.id.fab_add_task).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -152,17 +147,24 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
             sortMethod = SortMethod.RECENT_FIRST;
         }
 
-       getTasks();
+        getTasks();
 
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * Adds the given task to the list of created tasks.
+     *
+     * @param task the task to be added to the list
+     */
+    private void addTask(@NonNull Task task) {
+        taskViewModel.insert(task);
+        adapter.updateTasks(tasks);
+    }
 
     @Override
     public void onDeleteTask(Task task) {
-
         taskViewModel.delete(task);
-
     }
 
     /**
@@ -188,16 +190,15 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
             }
             // If both project and name of the task have been set
             else if (taskProject != null) {
-                // TODO: Replace this by id of persisted task
-                long id = (long) (Math.random() * 50000);
+
                 Task task = new Task(
-                        id,
+
                         taskProject.getId(),
                         taskName,
                         new Date().getTime()
                 );
 
-                taskViewModel.insert(task);
+                addTask(task);
                 dialogInterface.dismiss();
             }
             // If name has been set, but project has not been set (this should never occur)
@@ -250,9 +251,9 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
                     Collections.sort(tasks, new Task.TaskOldComparator());
                     break;
 
-              }
+            }
 
-              adapter.updateTasks(tasks);
+            adapter.updateTasks(tasks);
 
         }
     }

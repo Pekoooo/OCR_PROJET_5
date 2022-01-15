@@ -13,7 +13,7 @@ import java.util.List;
 
 public class TaskViewModel extends AndroidViewModel {
 
-    private TaskRepository repository;
+    private final TaskRepository repository;
     private final LiveData<List<Task>> allTasks;
     private int taskCount;
 
