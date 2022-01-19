@@ -28,4 +28,4 @@ Necessary instructions in order to compile and execute the code :
 - Sort tasks by creation order (Old to new or new to old)
 - Sort tasks by alphabetical order (A to Z or Z to A)
 
-This app is Using the Architecture components recommended by Google and an MVVM architecture, it handles local persistant data with SQLite.
+This app is Using the Architecture components recommended by Google and an MVVM architecture, it handles local persistant data with SQLite and Room
