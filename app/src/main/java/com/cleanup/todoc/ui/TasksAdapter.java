@@ -24,7 +24,7 @@ import java.util.List;
  *
  * @author Gaëtan HERFRAY
  */
-public class TasksAdapter extends RecyclerView.Adapter< TasksAdapter.TaskViewHolder> {
+public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.TaskViewHolder> {
     /**
      * The list of tasks the adapter deals with
      */
@@ -38,7 +38,7 @@ public class TasksAdapter extends RecyclerView.Adapter< TasksAdapter.TaskViewHol
     private final DeleteTaskListener deleteTaskListener;
 
 
-    TasksAdapter(List<Task> tasks, @NonNull final DeleteTaskListener deleteTaskListener) {
+    TasksAdapter(@NonNull List<Task> tasks, @NonNull final DeleteTaskListener deleteTaskListener) {
         this.tasks = tasks;
         this.deleteTaskListener = deleteTaskListener;
     }

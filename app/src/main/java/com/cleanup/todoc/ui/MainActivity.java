@@ -37,7 +37,6 @@ import java.util.List;
  */
 public class MainActivity extends AppCompatActivity implements TasksAdapter.DeleteTaskListener {
 
-
     private TaskViewModel taskViewModel;
     /**
      * List of all projects available in the application
@@ -49,7 +48,6 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
      */
     @NonNull
     private final ArrayList<Task> tasks = new ArrayList<>();
-
 
     /**
      * The adapter which handles the list of tasks
@@ -286,10 +284,8 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
 
             @Override
             public void onShow(DialogInterface dialogInterface) {
-
                 Button button = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
                 button.setOnClickListener(new View.OnClickListener() {
-
                     @Override
                     public void onClick(View view) {
                         onPositiveButtonClick(dialog);

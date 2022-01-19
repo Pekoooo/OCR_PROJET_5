@@ -21,7 +21,7 @@ import com.cleanup.todoc.data.entity.Task;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@Database(entities = {Project.class, Task.class}, version = 1)
+@Database(entities = {Project.class, Task.class}, version = 1, exportSchema = false)
 
 public abstract class AppDatabase extends RoomDatabase {
 
@@ -74,8 +74,6 @@ public abstract class AppDatabase extends RoomDatabase {
                  task = new Task(3, 3L, "Task 3", 30);
 
                 Log.d(TAG, "onCreate: db is created");
-
-
 
             });
 

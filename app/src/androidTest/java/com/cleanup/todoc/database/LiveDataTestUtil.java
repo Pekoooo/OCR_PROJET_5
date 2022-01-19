@@ -1,4 +1,4 @@
-package com.cleanup.todoc.utils;
+package com.cleanup.todoc.database;
 
 import androidx.annotation.Nullable;
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
@@ -22,7 +22,6 @@ import java.util.concurrent.TimeUnit;
 
 
 public class LiveDataTestUtil {
-
     public static <T> T getValue(final LiveData<T> liveData) throws InterruptedException {
         final Object[] data = new Object[1];
         final CountDownLatch latch = new CountDownLatch(1);
@@ -39,6 +38,4 @@ public class LiveDataTestUtil {
         //noinspection unchecked
         return (T) data[0];
     }
-
-
 }

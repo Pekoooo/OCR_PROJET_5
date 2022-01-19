@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.cleanup.todoc.ui.MainActivity;
+import com.cleanup.todoc.utils.RecyclerViewItemClickUtil;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -23,8 +24,11 @@ import static com.cleanup.todoc.TestUtils.withRecyclerView;
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertThat;
 
+import androidx.test.espresso.contrib.RecyclerViewActions;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.rule.ActivityTestRule;
+
+import java.util.Objects;
 
 /**
  * Instrumented test, which will execute on an Android device.
@@ -37,11 +41,25 @@ public class MainActivityInstrumentedTest {
     @Rule
     public ActivityTestRule<MainActivity> rule = new ActivityTestRule<>(MainActivity.class);
 
+
     @Test
     public void addAndRemoveTask() {
         MainActivity activity = rule.getActivity();
         TextView lblNoTask = activity.findViewById(R.id.lbl_no_task);
         RecyclerView listTasks = activity.findViewById(R.id.list_tasks);
+        int count = listTasks.getAdapter().getItemCount();
+
+
+        // Deletes the list if test starts with a non empty recyclerview
+        if (count != 0) {
+
+            for (int i = count; i > 0; i--) {
+
+                onView(withId(R.id.list_tasks)).perform(
+                        RecyclerViewActions.actionOnItemAtPosition(0, RecyclerViewItemClickUtil
+                                .clickChildViewWithId(R.id.img_delete)));
+            }
+        }
 
         onView(withId(R.id.fab_add_task)).perform(click());
         onView(withId(R.id.txt_task_name)).perform(replaceText("Tâche example"));
@@ -65,6 +83,20 @@ public class MainActivityInstrumentedTest {
     @Test
     public void sortTasks() {
         MainActivity activity = rule.getActivity();
+        TextView lblNoTask = activity.findViewById(R.id.lbl_no_task);
+        RecyclerView listTasks = activity.findViewById(R.id.list_tasks);
+        int count = listTasks.getAdapter().getItemCount();
+
+        if (count != 0) {
+
+            for (int i = count; i > 0; i--) {
+
+                onView(withId(R.id.list_tasks)).perform(
+                        RecyclerViewActions.actionOnItemAtPosition(0, RecyclerViewItemClickUtil
+                                .clickChildViewWithId(R.id.img_delete)));
+
+            }
+        }
 
         onView(withId(R.id.fab_add_task)).perform(click());
         onView(withId(R.id.txt_task_name)).perform(replaceText("aaa Tâche example"));
