@@ -1,19 +1,6 @@
 package com.cleanup.todoc;
 
 
-import android.view.View;
-import android.widget.TextView;
-
-import com.cleanup.todoc.ui.MainActivity;
-import com.cleanup.todoc.utils.RecyclerViewItemClickUtil;
-
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
-
-import androidx.recyclerview.widget.RecyclerView;
-
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.replaceText;
@@ -24,9 +11,20 @@ import static com.cleanup.todoc.TestUtils.withRecyclerView;
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertThat;
 
+import android.view.View;
+import android.widget.TextView;
+
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.test.espresso.contrib.RecyclerViewActions;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.rule.ActivityTestRule;
+
+import com.cleanup.todoc.ui.MainActivity;
+import com.cleanup.todoc.utils.RecyclerViewItemClickUtil;
+
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import java.util.Objects;
 
@@ -47,14 +45,11 @@ public class MainActivityInstrumentedTest {
         MainActivity activity = rule.getActivity();
         TextView lblNoTask = activity.findViewById(R.id.lbl_no_task);
         RecyclerView listTasks = activity.findViewById(R.id.list_tasks);
-        int count = listTasks.getAdapter().getItemCount();
-
+        int count = Objects.requireNonNull(listTasks.getAdapter()).getItemCount();
 
         // Deletes the list if test starts with a non empty recyclerview
         if (count != 0) {
-
             for (int i = count; i > 0; i--) {
-
                 onView(withId(R.id.list_tasks)).perform(
                         RecyclerViewActions.actionOnItemAtPosition(0, RecyclerViewItemClickUtil
                                 .clickChildViewWithId(R.id.img_delete)));
@@ -83,9 +78,8 @@ public class MainActivityInstrumentedTest {
     @Test
     public void sortTasks() {
         MainActivity activity = rule.getActivity();
-        TextView lblNoTask = activity.findViewById(R.id.lbl_no_task);
         RecyclerView listTasks = activity.findViewById(R.id.list_tasks);
-        int count = listTasks.getAdapter().getItemCount();
+        int count = Objects.requireNonNull(listTasks.getAdapter()).getItemCount();
 
         if (count != 0) {
 

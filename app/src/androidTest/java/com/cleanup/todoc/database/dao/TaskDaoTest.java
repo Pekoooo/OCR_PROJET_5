@@ -1,10 +1,7 @@
 package com.cleanup.todoc.database.dao;
 
 
-import static androidx.test.espresso.matcher.ViewMatchers.assertThat;
-
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 import android.content.Context;
 
@@ -13,16 +10,16 @@ import androidx.room.Room;
 import androidx.test.core.app.ApplicationProvider;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
+import com.cleanup.todoc.data.AppDatabase;
+import com.cleanup.todoc.data.entity.Project;
+import com.cleanup.todoc.data.entity.Task;
+import com.cleanup.todoc.database.LiveDataTestUtil;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import com.cleanup.todoc.data.AppDatabase;
-import com.cleanup.todoc.data.entity.Project;
-import com.cleanup.todoc.data.entity.Task;
-import com.cleanup.todoc.database.LiveDataTestUtil;
 
 import java.util.Date;
 import java.util.List;
@@ -56,7 +53,7 @@ public class TaskDaoTest {
 
 
     @Test
-    public void insertUser() throws Exception {
+    public void insertTask() throws Exception {
         database.taskDao().insert(task1);
         database.taskDao().insert(task2);
         List<Task> tasks = LiveDataTestUtil.getValue(database.taskDao().getAllTasks());
@@ -64,7 +61,7 @@ public class TaskDaoTest {
     }
 
    @Test
-   public void deleteUser() throws Exception {
+   public void deleteTask() throws Exception {
        List<Task> tasks = LiveDataTestUtil.getValue(database.taskDao().getAllTasks());
        database.taskDao().insert(task3);
        database.taskDao().delete(task3);

@@ -1,23 +1,10 @@
 package com.cleanup.todoc.database;
 
 import androidx.annotation.Nullable;
-import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
-import androidx.room.Room;
-
-
-import com.cleanup.todoc.data.AppDatabase;
-import com.cleanup.todoc.data.dao.TaskDao;
-
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.runner.RunWith;
 
 import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 

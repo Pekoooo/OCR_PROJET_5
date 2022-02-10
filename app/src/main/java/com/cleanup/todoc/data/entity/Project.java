@@ -5,6 +5,7 @@ import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 /**
@@ -18,7 +19,7 @@ public class Project {
      * The unique identifier of the project
      */
     @PrimaryKey(autoGenerate = true)
-    private final long id;
+    private long id;
 
     /**
      * The name of the project
@@ -44,6 +45,15 @@ public class Project {
         this.name = name;
         this.color = color;
     }
+
+    @Ignore
+    public Project(@NonNull String name, @ColorInt int color) {
+        this.name = name;
+        this.color = color;
+    }
+
+
+
 
     /**
      * Returns all the projects of the application.

@@ -13,20 +13,16 @@ import java.util.List;
 
 public class TaskRepository {
 
-    private TaskDao taskDao;
-    private ProjectDao projectDao;
-    private LiveData<List<Task>> allTasks;
-    private LiveData<List<Project>> allProjects;
-    private int tasksCount;
+    private final TaskDao taskDao;
+    private final LiveData<List<Task>> allTasks;
+    private final LiveData<List<Project>> allProjects;
 
     public TaskRepository(Application application) {
         AppDatabase db = AppDatabase.getDatabase(application);
         taskDao = db.taskDao();
-        projectDao = db.projectDao();
+        ProjectDao projectDao = db.projectDao();
         allTasks = taskDao.getAllTasks();
         allProjects = projectDao.getAllProjects();
-
-
     }
 
     public LiveData<List<Task>> getAllTasks() {
@@ -38,15 +34,11 @@ public class TaskRepository {
     }
 
     public void insert(Task task) {
-        AppDatabase.databaseWriteExecutor.execute(() -> {
-            taskDao.insert(task);
-        });
+        AppDatabase.databaseWriteExecutor.execute(() -> taskDao.insert(task));
     }
 
     public void delete(Task task){
-        AppDatabase.databaseWriteExecutor.execute(()-> {
-            taskDao.delete(task);
-        });
+        AppDatabase.databaseWriteExecutor.execute(()-> taskDao.delete(task));
     }
 
 

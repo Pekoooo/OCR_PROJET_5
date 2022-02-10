@@ -3,9 +3,7 @@ package com.cleanup.todoc.data;
 import static android.content.ContentValues.TAG;
 
 import android.content.Context;
-import android.telecom.Call;
 import android.util.Log;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.room.Database;
@@ -57,21 +55,19 @@ public abstract class AppDatabase extends RoomDatabase {
                 ProjectDao projectDao = INSTANCE.projectDao();
                 projectDao.deleteAll();
 
-                Project project = new Project(1L, "Projet Tartampion", 0xFFEADAD1);
+                Project project = new Project("Projet Tartampion", 0xFFEADAD1);
                 projectDao.insert(project);
 
-                 project = new Project(2L, "Projet Lucidia", 0xFFB4CDBA);
+                 project = new Project("Projet Lucidia", 0xFFB4CDBA);
                 projectDao.insert(project);
 
-                project = new Project(3L, "Projet Circus", 0xFFA3CED2);
+                project = new Project("Projet Circus", 0xFFA3CED2);
                 projectDao.insert(project);
 
                 TaskDao taskDao = INSTANCE.taskDao();
                 taskDao.deleteAll();
 
-                Task task = new Task(1, 1L, "Task 1", 10);
-                 task = new Task(2, 2L, "Task 2", 20);
-                 task = new Task(3, 3L, "Task 3", 30);
+
 
                 Log.d(TAG, "onCreate: db is created");
 

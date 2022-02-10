@@ -1,7 +1,6 @@
 package com.cleanup.todoc.database.dao;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 import android.content.Context;
 
@@ -28,7 +27,7 @@ public class ProjectDaoTest {
     @Rule
     public InstantTaskExecutorRule instantTaskExecutorRule = new InstantTaskExecutorRule();
     private AppDatabase database;
-    private Project[] projects = Project.getAllProjects();
+    private final Project[] projects = Project.getAllProjects();
 
     @Before
     public void createDb()  {
@@ -44,23 +43,23 @@ public class ProjectDaoTest {
         this.database.close();
     }
 
-    @Test
-    public void insertAndGetProject() throws InterruptedException {
-        List<Project> projects = LiveDataTestUtil.getValue(this.database.projectDao().getAllProjects());
+      @Test
+      public void insertAndGetProject() throws InterruptedException {
+          List<Project> projects;
 
-        this.database.projectDao().insertAll(this.projects);
+          this.database.projectDao().insertAll(this.projects);
 
-        projects = LiveDataTestUtil.getValue(database.projectDao().getAllProjects());
-        assertEquals(projects.get(0).getName(), this.projects[0].getName());
-        assertEquals(projects.get(0).getId(), this.projects[0].getId());
-        assertEquals(projects.get(0).getColor(), this.projects[0].getColor());
+          projects = LiveDataTestUtil.getValue(database.projectDao().getAllProjects());
+          assertEquals(projects.get(0).getName(), this.projects[0].getName());
+          assertEquals(projects.get(0).getId(), this.projects[0].getId());
+          assertEquals(projects.get(0).getColor(), this.projects[0].getColor());
 
-        assertEquals(projects.get(1).getName(), this.projects[1].getName());
-        assertEquals(projects.get(1).getId(), this.projects[1].getId());
-        assertEquals(projects.get(1).getColor(), this.projects[1].getColor());
+          assertEquals(projects.get(1).getName(), this.projects[1].getName());
+          assertEquals(projects.get(1).getId(), this.projects[1].getId());
+          assertEquals(projects.get(1).getColor(), this.projects[1].getColor());
 
-        assertEquals(projects.get(2).getName(), this.projects[2].getName());
-        assertEquals(projects.get(2).getId(), this.projects[2].getId());
-        assertEquals(projects.get(2).getColor(), this.projects[2].getColor());
-    }
+          assertEquals(projects.get(2).getName(), this.projects[2].getName());
+          assertEquals(projects.get(2).getId(), this.projects[2].getId());
+          assertEquals(projects.get(2).getColor(), this.projects[2].getColor());
+      }
 }
